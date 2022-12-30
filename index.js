@@ -27,6 +27,7 @@ const managerQuestions = [
     {
      type: "list",
      message: "Add another team member or finish building your team!",
+     name: "team"
      choices: [
         "Engineer",
         "Intern",
@@ -100,3 +101,18 @@ const internQuestions = [
 ];
 
 
+
+function init () {
+    prompt(managerQuestions)
+        .then((response) => {
+            if(response.team === "Engineer") {
+                prompt(engineerQuestions);
+            }
+            if(response.team === "Intern") {
+                prompt(internQuestions);
+            }
+            if(response.team === "Finish building my team") {
+                // generateHTML function
+            }
+        })
+}
