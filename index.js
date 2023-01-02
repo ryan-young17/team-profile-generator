@@ -3,116 +3,48 @@ const Engineer = require('./lib/Engineer');
 const Intern = require('./lib/Intern');
 const prompt = inquirer.createPromptModule();
 
-const managerQuestions = [
+const questions = [
     {
      type: "input",
-     message: "What is the manager's name?",
+     message: "What is the employee's name?",
      name: "name",
     },
     {
      type: "input",
-     message: "What is the manager's employee ID?",
+     message: "What is the employee's ID?",
      name: "id",   
     },
     {
      type: "input",
-     message: "What is the manager's email?",
+     message: "What is the employee's email?",
      name: "email",   
     },
     {
-     type: "input",
-     message: "What is the office phone number?",
-     name: "phone",   
-    },
-    {
      type: "list",
-     message: "Add another team member or finish building your team!",
-     name: "team"
+     message: "Select the employee's role:",
+     name: "role",
      choices: [
+        "Manager",
         "Engineer",
         "Intern",
-        "Finish building my team",
      ],   
     },
 ];
 
-const engineerQuestions = [
-    {
-        type: "input",
-        message: "What is the engineer's name?",
-        name: "name",
-       },
-       {
-        type: "input",
-        message: "What is the engineer's employee ID?",
-        name: "id",   
-       },
-       {
-        type: "input",
-        message: "What is the engineer's email?",
-        name: "email",   
-       },
-       {
-        type: "input",
-        message: "What is the engineer's GitHub username?",
-        name: "github",   
-       },
-       {
-        type: "list",
-        message: "Add another team member or finish building your team!",
-        choices: [
-           "Engineer",
-           "Intern",
-           "Finish building my team",
-        ],   
-       },
-];
-
-const internQuestions = [
-    {
-        type: "input",
-        message: "What is the intern's name?",
-        name: "name",
-       },
-       {
-        type: "input",
-        message: "What is the intern's employee ID?",
-        name: "id",   
-       },
-       {
-        type: "input",
-        message: "What is the intern's email?",
-        name: "email",   
-       },
-       {
-        type: "input",
-        message: "What is the intern's school?",
-        name: "school",   
-       },
-       {
-        type: "list",
-        message: "Add another team member or finish building your team!",
-        choices: [
-           "Engineer",
-           "Intern",
-           "Finish building my team",
-        ],   
-       },
-];
-
-
+function generateHTML(response) {};
+   
 
 function init () {
     prompt(managerQuestions)
         .then((response) => {
-            if(response.team === "Engineer") {
+            if(response.role === "Engineer") {
                 prompt(engineerQuestions);
             }
-            if(response.team === "Intern") {
+            if(response.role === "Intern") {
                 prompt(internQuestions);
             }
-            if(response.team === "Finish building my team") {
+            if(response.role === "Finish building my team") {
                 // generateHTML function
             }
         })
-}
+};
