@@ -3,6 +3,7 @@ const Engineer = require('./lib/Engineer');
 const Intern = require('./lib/Intern');
 const inquirer = require("inquirer");
 const prompt = inquirer.createPromptModule();
+const employees = [];
 
 const questions = [
     {
@@ -64,8 +65,24 @@ function init () {
             ]) 
             .then((response) => {
                 // Create new member objects
-                
-                // Call generateHTML function
+                if (response.role === "Manager") {
+                    const manager = new Manager(response.name, response.id, response.email, response.officeNumber);
+                    employees.push(manager);
+                }
+                if (response.role === "Engineer") {
+                    const engineer = new Engineer(response.name, response.id, response.email, response.gitHub);
+                    employees.push(engineer);
+                }
+                if (response.role === "Intern") {
+                    const intern = new Intern(response.name, response.id, response.email, response.school);
+                    employees.push(intern);
+                }
+                // For adding new members or completing team
+                if (response.addEmployee) {
+                    init();
+                } else {
+                    // Call generateHTML function
+                }
             })
         });
     };   
