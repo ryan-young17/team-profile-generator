@@ -64,6 +64,7 @@ function init () {
             ]) 
             .then((response) => {
                 // Create new member objects
+                
                 // Call generateHTML function
             })
         });
