@@ -1,9 +1,11 @@
 const Manager = require('./lib/Manager');
 const Engineer = require('./lib/Engineer');
 const Intern = require('./lib/Intern');
+const generateHTML = require('./lib/generateHTML');
 const inquirer = require("inquirer");
 const prompt = inquirer.createPromptModule();
-const employees = [];
+const fs = require("fs");
+const team = [];
 
 const questions = [
     {
@@ -33,9 +35,12 @@ const questions = [
     },
 ];
 
-function generateHTML(response) {};
+const writeToFile = (html) => {
+    fs.writeFileSync("index.html", html);
+    console.log("Success! Your team has been generated.");
+};
 
-function init () {
+const generateTeamMembers = (team) => {
     prompt(questions)
         .then((response) => {
             prompt([
@@ -67,24 +72,25 @@ function init () {
                 // Create new member objects
                 if (response.role === "Manager") {
                     const manager = new Manager(response.name, response.id, response.email, response.officeNumber);
-                    employees.push(manager);
+                    team.push(manager);
                 }
                 if (response.role === "Engineer") {
                     const engineer = new Engineer(response.name, response.id, response.email, response.gitHub);
-                    employees.push(engineer);
+                    team.push(engineer);
                 }
                 if (response.role === "Intern") {
                     const intern = new Intern(response.name, response.id, response.email, response.school);
-                    employees.push(intern);
+                    team.push(intern);
                 }
                 // For adding new members or completing team
                 if (response.addEmployee) {
-                    init();
+                    generateTeamMembers();
                 } else {
-                    // Call generateHTML function
+                    generateHTML();
                 }
             })
+            .then(writeToFile);
         });
     };   
-
-init();
+    
+generateTeamMembers();
