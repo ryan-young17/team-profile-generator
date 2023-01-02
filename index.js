@@ -1,6 +1,7 @@
 const Manager = require('./lib/Manager');
 const Engineer = require('./lib/Engineer');
 const Intern = require('./lib/Intern');
+const inquirer = require("inquirer");
 const prompt = inquirer.createPromptModule();
 
 const questions = [
@@ -32,45 +33,40 @@ const questions = [
 ];
 
 function generateHTML(response) {};
-   
 
 function init () {
     prompt(questions)
         .then((response) => {
-            if(response.role === "Manager") {
-                prompt([
-                    {
-                     type: "input",
-                     message: "What is the office number?",
-                     name: "officeNumber",
-                    }]);
-            }
-            if(response.role === "Engineer") {
-                prompt([
-                    {
-                     type: "input",
-                     message: "What is the gitHub username?",
-                     name: "gitHub",
-                    }]);
-            }
-            if(response.role === "Intern") {
-                prompt([
-                    {
-                     type: "input",
-                     message: "What is the intern's school?",
-                     name: "school",
-                    }]);
-            }
             prompt([
+                {
+                 when: () => response.role === "Manager",
+                 type: "input",
+                 message: "What is the office number?",
+                 name: "officeNumber",
+                },
+                {
+                 when: () => response.role === "Engineer",
+                 type: "input",
+                 message: "What is the employee's gitHub username?",
+                 name: "gitHub",
+                },
+                {
+                 when: () => response.role === "Intern",
+                 type: "input",
+                 message: "What is the intern's school?",
+                 name: "school",
+                },
                 {
                  type: "confirm",
                  message: "Would you like to add another team member?",
                  name: "addEmployee",   
-                }
-            ]);
-        })
-        .then((response) => {
-            // Create new member objects
-            // Call generateHTML function
-        })
-};
+                },
+            ]) 
+            .then((response) => {
+                // Create new member objects
+                // Call generateHTML function
+            })
+        });
+    };   
+
+init();
