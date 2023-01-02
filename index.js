@@ -35,16 +35,42 @@ function generateHTML(response) {};
    
 
 function init () {
-    prompt(managerQuestions)
+    prompt(questions)
         .then((response) => {
+            if(response.role === "Manager") {
+                prompt([
+                    {
+                     type: "input",
+                     message: "What is the office number?",
+                     name: "officeNumber",
+                    }]);
+            }
             if(response.role === "Engineer") {
-                prompt(engineerQuestions);
+                prompt([
+                    {
+                     type: "input",
+                     message: "What is the gitHub username?",
+                     name: "gitHub",
+                    }]);
             }
             if(response.role === "Intern") {
-                prompt(internQuestions);
+                prompt([
+                    {
+                     type: "input",
+                     message: "What is the intern's school?",
+                     name: "school",
+                    }]);
             }
-            if(response.role === "Finish building my team") {
-                // generateHTML function
-            }
+            prompt([
+                {
+                 type: "confirm",
+                 message: "Would you like to add another team member?",
+                 name: "addEmployee",   
+                }
+            ]);
+        })
+        .then((response) => {
+            // Create new member objects
+            // Call generateHTML function
         })
 };
