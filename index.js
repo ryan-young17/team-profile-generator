@@ -5,7 +5,6 @@ const generateHTML = require('./lib/generateHTML');
 const inquirer = require("inquirer");
 const prompt = inquirer.createPromptModule();
 const fs = require("fs");
-const team = [];
 
 const questions = [
     {
@@ -35,12 +34,9 @@ const questions = [
     },
 ];
 
-const writeToFile = (html) => {
-    fs.writeFileSync("index.html", html);
-    console.log("Success! Your team has been generated.");
-};
+const teamArray = [];
 
-const generateTeamMembers = (team) => {
+const generateTeamMembers = () => {
     prompt(questions)
         .then((response) => {
             prompt([
@@ -69,27 +65,25 @@ const generateTeamMembers = (team) => {
                 },
             ]) 
             .then((response) => {
-                // Create new member objects
                 if (response.role === "Manager") {
                     const manager = new Manager(response.name, response.id, response.email, response.officeNumber);
-                    team.push(manager);
+                    teamArray.push(manager);
                 }
                 if (response.role === "Engineer") {
                     const engineer = new Engineer(response.name, response.id, response.email, response.gitHub);
-                    team.push(engineer);
+                    teamArray.push(engineer);
                 }
                 if (response.role === "Intern") {
                     const intern = new Intern(response.name, response.id, response.email, response.school);
-                    team.push(intern);
+                    teamArray.push(intern);
                 }
-                // For adding new members or completing team
-                if (response.addEmployee) {
-                    generateTeamMembers();
+                if (response.addEmployee === true) {
+                    return generateTeamMembers(teamArray);
                 } else {
-                    generateHTML();
+                    const html = generateHTML(teamArray);
+                    fs.writeFile("index.html", html, (error) => error ? console.log(error) : console.log("Success! Your team has been generated."));
                 }
             })
-            .then(writeToFile);
         });
     };   
     
