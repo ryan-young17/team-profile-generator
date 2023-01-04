@@ -63,25 +63,29 @@ const generateTeamMembers = () => {
                  message: "Would you like to add another team member?",
                  name: "addEmployee",   
                 },
-            ]) 
-            if (response.role === "Manager") {
-                const manager = new Manager(response.name, response.id, response.email, response.officeNumber);
-                teamArray.push(manager);
-            }
-            if (response.role === "Engineer") {
-                const engineer = new Engineer(response.name, response.id, response.email, response.gitHub);
-                teamArray.push(engineer);
-            }
-            if (response.role === "Intern") {
-                const intern = new Intern(response.name, response.id, response.email, response.school);
-                teamArray.push(intern);
-            }
-            if (response.addEmployee === true) {
-                return generateTeamMembers(teamArray);
-            } else {
-                const html = generateHTML(teamArray);
-                fs.writeFile("index.html", html, (error) => error ? console.log(error) : console.log("Success! Your team has been generated."));
-            }          
+            ])
+            .then(() => {
+                if (response.role === "Manager") {
+                    const manager = new Manager(response.name, response.id, response.email, response.officeNumber);
+                    teamArray.push(manager);
+                }
+                if (response.role === "Engineer") {
+                    const engineer = new Engineer(response.name, response.id, response.email, response.gitHub);
+                    teamArray.push(engineer);
+                }
+                if (response.role === "Intern") {
+                    const intern = new Intern(response.name, response.id, response.email, response.school);
+                    teamArray.push(intern);
+                }    
+            })
+            .then(() => {
+                if (response.addEmployee === true) {
+                    return generateTeamMembers(teamArray);
+                } else {
+                    const html = generateHTML(teamArray);
+                    fs.writeFile("index.html", html, (error) => error ? console.log(error) : console.log("Success! Your team has been generated."));
+                }  
+            })         
         });
     };   
     
