@@ -1,6 +1,6 @@
 # Team Profile Generator
 
-[Walk-through Video](https://drive.google.com/file/d/1vco1YqLgwL5qOcNDNiY9BHOp8-uLmo35/view?usp=sharing)
+[Outputted Site](https://ryan-young17.github.io/team-profile-generator/)
 
 ## Table of Contents
 - [Description](#Description)
